@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.BookDao">
+    <!--SQL片段  -->
+    <sql id="selectBookListWhere">
+        <where>
+	       <if test="book_name != null" >
+	           book_name like "%"#{book_name}"%"
+	       </if>
+	       <if test="book_resource != null" >
+	        and book_resource = #{book_resource}
+	       </if>
+        </where>
+    </sql>
+	<!-- 查询图书列表  -->
+	<select id="selectBookList" parameterType="book" resultType="book">
+		SELECT * from book
+
+		<include refid="selectBookListWhere"/>
+		<!-- 执行分页查询 -->
+		<if test="start !=null and rows != null">
+			limit #{start},#{rows}
+		</if>
+	</select>
+	<!-- 查询客户总数 -->
+	<select id="selectBookListCount" parameterType="book" 
+                                                 resultType="Integer">
+		select count(*) from book
+		<include refid="selectBookListWhere"/>
+	</select>	
+	
+	<!-- 添加图书 -->
+	<insert id="createBook" parameterType="book">
+	    insert into book(
+	                     book_name,
+	  					 book_resource,
+	  					 book_category,
+	  					 book_writer,
+	  					 book_press,
+	  					 book_edition
+	             )
+	             values(#{book_name},
+	                    #{book_resource},
+	                    #{book_category},
+	                    #{book_writer},
+	                    #{book_press},
+	                    #{book_edition}
+	            )
+	</insert>
+	<!-- 根据id获取图书信息 -->
+	<select id="getBookById" parameterType="Integer" 
+	resultType="book">
+	    select * from book where book_id = #{id}
+	</select>
+	<!-- 更新图书 -->
+	<update id="updateBook" parameterType="book">
+	    update book
+	    <set>
+	        <if test="book_name!=null">
+	            book_name=#{book_name},
+	        </if>
+	        <if test="book_resource!=null">
+	            book_resource=#{book_resource},
+	        </if>
+	        <if test="book_category!=null">
+	            book_category=#{book_category},
+	        </if>
+	        <if test="book_writer!=null">
+	            book_writer=#{book_writer},
+	        </if>
+	        <if test="book_press!=null">
+	            book_press=#{book_press},
+	        </if>
+	        <if test="book_edition!=null">
+	            book_edition=#{book_edition},
+	        </if>
+	    </set>
+	    where book_id=#{book_id}
+	</update>
+	<!-- 删除图书 -->
+	<delete id="deleteBook" parameterType="Integer">
+	    delete from book where book_id=#{id}
+	</delete>
+</mapper>
