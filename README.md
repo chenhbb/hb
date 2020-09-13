@@ -1,2 +1,2 @@
 hello
-！[Image text](images/login.png)
+(images/login.png)
