@@ -2,7 +2,7 @@ package com.po;
 import java.io.Serializable;
 import java.util.Date;
 /**
- * 客户持久化类
+ * 图书持久化类
  */
 public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
