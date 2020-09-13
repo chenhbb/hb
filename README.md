@@ -1,2 +1,2 @@
 hello
-！[Image text](https://github.com/AlittlelittleChris/hb/blob/master/images/login.png)
+！[Image text](images/login.png)
